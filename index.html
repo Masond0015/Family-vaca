@@ -412,7 +412,7 @@ h1 {
 
 <div class="progress-wrap">
   <div class="prog-meta">
-    <span>Today</span>
+    <span>Feb. 16, 2026</span></span>
     <span id="pct-lbl">0.00% of the wait done</span>
     <span>Takeoff ✈️</span>
   </div>
@@ -439,7 +439,8 @@ h1 {
 
     // May 16 2026 6:00 AM EDT (UTC-4) = 10:00 UTC
     const target  = new Date(Date.UTC(2026, 4, 16, 10, 0, 0));
-    const startMs = Date.now();
+    // Progress bar: fixed window Feb 18 → May 16 2026 (doesn't reset on page load)
+    const startMs = new Date(Date.UTC(2026, 1, 18, 0, 0, 0)).getTime();
     const totalMs = target.getTime() - startMs;
 
     function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
