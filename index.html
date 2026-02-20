@@ -1,3 +1,5 @@
+<!-- v4 - fixed progress bar -->
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -412,8 +414,8 @@ h1 {
 
 <div class="progress-wrap">
   <div class="prog-meta">
-    <span>Feb. 16, 2026</span></span>
-    <span id="pct-lbl">0.00% of the wait done</span>
+    <span>Feb. 18, 2026</span>
+    <span id="pct-lbl">0.00% there</span>
     <span>Takeoff ✈️</span>
   </div>
   <div class="prog-track">
@@ -473,9 +475,9 @@ h1 {
       if (m !== prev.m) { document.getElementById('mins').textContent = pad(m); triggerPop('b-mins'); prev.m = m; }
       if (s !== prev.s) { document.getElementById('secs').textContent = pad(s); triggerPop('b-secs'); prev.s = s; }
 
-      const pct = Math.min(100, ((now - startMs) / totalMs) * 100);
+      const pct = Math.min(100, Math.max(0, ((now - startMs) / totalMs) * 100));
       document.getElementById('fill').style.width = pct + '%';
-      document.getElementById('pct-lbl').textContent = pct.toFixed(2) + '% of the wait done';
+      document.getElementById('pct-lbl').textContent = pct.toFixed(2) + '% there';
     }
 
     tick();
