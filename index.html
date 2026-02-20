@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Turks &amp; Caicos Countdown</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -12,7 +12,6 @@
       --ocean-mid:   #007f6e;
       --ocean-light: #00d4a0;
       --foam:        #c8f0e8;
-      --sand:        #f7e9cc;
       --sun:         #f6c24a;
       --white:       #f0fff8;
     }
@@ -20,9 +19,14 @@
 ```
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   min-height: 100vh;
-  background: var(--ocean-deep);
+  min-height: 100dvh;
   font-family: 'Jost', sans-serif;
   color: var(--white);
   display: flex;
@@ -31,10 +35,12 @@ body {
   justify-content: center;
   overflow: hidden;
   position: relative;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+/* ── Sky ── */
 .sky {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: linear-gradient(
     to bottom,
@@ -47,13 +53,14 @@ body {
   z-index: 0;
 }
 
+/* ── Sun ── */
 .sun-orb {
-  position: absolute;
-  top: -30px;
+  position: fixed;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 140px;
-  height: 140px;
+  width: min(130px, 30vw);
+  height: min(130px, 30vw);
   border-radius: 50%;
   background: radial-gradient(circle, #fff9d0 0%, var(--sun) 45%, transparent 75%);
   filter: blur(2px);
@@ -62,14 +69,14 @@ body {
 }
 
 .sun-glow {
-  position: absolute;
-  top: -80px;
+  position: fixed;
+  top: -60px;
   left: 50%;
   transform: translateX(-50%);
-  width: 280px;
-  height: 280px;
+  width: min(260px, 60vw);
+  height: min(260px, 60vw);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(246,194,74,0.25) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(246,194,74,0.3) 0%, transparent 70%);
   animation: sunPulse 5s ease-in-out infinite;
   z-index: 1;
 }
@@ -79,36 +86,28 @@ body {
   50%       { opacity: 0.85; transform: translateX(-50%) scale(1.06); }
 }
 
-.palm-left, .palm-right {
-  position: absolute;
-  bottom: 100px;
-  z-index: 5;
-  pointer-events: none;
-}
-.palm-left  { left: -10px; }
-.palm-right { right: -10px; transform: scaleX(-1); }
-
+/* ── Ocean ── */
 .ocean {
-  position: absolute;
+  position: fixed;
   bottom: 0; left: 0;
-  width: 100%; height: 52%;
+  width: 100%; height: 40%;
   z-index: 2;
   overflow: visible;
 }
 
 .horizon-haze {
-  position: absolute;
+  position: fixed;
   bottom: 0; left: 0;
-  width: 100%; height: 52%;
+  width: 100%; height: 44%;
   z-index: 3;
   pointer-events: none;
   background: linear-gradient(
     to bottom,
-    rgba(100,200,230,0.55) 0%,
-    rgba(30,160,190,0.30) 18%,
+    rgba(100,200,230,0.5) 0%,
+    rgba(30,160,190,0.25) 18%,
     transparent 45%
   );
-  filter: blur(18px);
+  filter: blur(16px);
 }
 
 .wave-layer {
@@ -116,10 +115,9 @@ body {
   width: 220%;
   height: 100%;
 }
-
 .w1 {
   background: linear-gradient(to bottom, #00b894 0%, #007f6e 40%, #004d50 100%);
-  bottom: 0; opacity: 1;
+  bottom: 0;
   animation: waveMove 9s linear infinite;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
@@ -140,89 +138,100 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
 }
-
 @keyframes waveMove {
   0%   { transform: translateX(-50%); }
   100% { transform: translateX(0%); }
 }
 
+/* ── Sand ── */
 .sandbar {
-  position: absolute;
+  position: fixed;
   bottom: 0; left: 0;
-  width: 100%; height: 80px;
-  background: linear-gradient(to top, #c9954a 0%, #e0b87a 55%, transparent 100%);
-  z-index: 3;
+  width: 100%; height: 60px;
+  background: linear-gradient(to top, #c9954a 0%, #e0b87a 60%, transparent 100%);
+  z-index: 4;
 }
 
+/* ── Foam ── */
 .foam-dots {
-  position: absolute;
-  bottom: 62px; left: 0;
-  width: 100%; height: 12px;
-  z-index: 4;
+  position: fixed;
+  bottom: 52px; left: 0;
+  width: 100%; height: 14px;
+  z-index: 5;
   overflow: hidden;
 }
 .foam-dot {
   position: absolute;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.75);
   border-radius: 50%;
   animation: foamFade 3s ease-in-out infinite;
 }
-
 @keyframes foamFade {
   0%, 100% { opacity: 0; }
   40%, 60%  { opacity: 1; }
 }
 
+/* ── Palm trees — pinned to sides, bottom, behind card ── */
+.palm-left, .palm-right {
+  position: fixed;
+  bottom: 50px;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.palm-left  { left: -8px; }
+.palm-right { right: -8px; transform: scaleX(-1); }
+
+/* ── Main card ── */
 .card {
   position: relative;
   z-index: 10;
   text-align: center;
-  padding: 2rem 1.5rem 2.5rem;
-  max-width: 500px;
   width: 92vw;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.5rem, 1.8vh, 1.1rem);
   animation: riseIn 1.2s cubic-bezier(.16,1,.3,1) both;
+  /* Push card up slightly so it clears the sandbar */
+  margin-bottom: 70px;
 }
 
 @keyframes riseIn {
-  from { opacity: 0; transform: translateY(40px); }
+  from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 .eyebrow {
-  font-size: clamp(0.65rem, 2vw, 0.78rem);
-  letter-spacing: 0.38em;
+  font-size: clamp(0.6rem, 1.8vw, 0.78rem);
+  letter-spacing: 0.36em;
   text-transform: uppercase;
   color: var(--sun);
-  margin-bottom: 0.7rem;
-  animation: riseIn 1.2s 0.15s both;
 }
 
 h1 {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(2.6rem, 10vw, 5.5rem);
+  font-size: clamp(2.4rem, 9vw, 5rem);
   font-style: italic;
-  line-height: 1.0;
+  line-height: 1;
   color: var(--white);
-  text-shadow: 0 2px 24px rgba(2,61,84,0.5);
-  animation: riseIn 1.2s 0.25s both;
+  text-shadow: 0 2px 20px rgba(2,61,84,0.45);
 }
 
 .dest-flag {
-  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
-  letter-spacing: 0.18em;
+  font-size: clamp(0.75rem, 2.2vw, 0.92rem);
+  letter-spacing: 0.15em;
   color: var(--foam);
-  margin-top: 0.4rem;
   opacity: 0.85;
-  animation: riseIn 1.2s 0.35s both;
 }
 
+/* ── Countdown row ── */
 .countdown {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  gap: clamp(0.4rem, 2vw, 1.4rem);
-  margin: 2rem 0 1.5rem;
-  animation: riseIn 1.2s 0.45s both;
+  align-items: stretch;
+  gap: clamp(0.3rem, 1.5vw, 0.8rem);
   width: 100%;
 }
 
@@ -230,79 +239,74 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255,255,255,0.10);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 14px;
-  padding: clamp(0.5rem, 2vw, 1rem) clamp(0.5rem, 2vw, 1.5rem);
+  justify-content: center;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: clamp(0.5rem, 1.5vh, 0.9rem) 0;
   flex: 1;
   min-width: 0;
-  max-width: 90px;
-  box-shadow: 0 8px 32px rgba(2,61,84,0.3);
+  box-shadow: 0 6px 24px rgba(2,61,84,0.25);
 }
 
 .block.pop { animation: pop 0.25s ease; }
-
 @keyframes pop {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.12); }
-  100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
 .block-val {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(1.6rem, 6vw, 3.6rem);
+  font-size: clamp(1.7rem, 6.5vw, 3.2rem);
   color: var(--white);
   line-height: 1;
-  width: 100%;
-  text-align: center;
 }
 
 .block-lbl {
-  font-size: clamp(0.5rem, 1.4vw, 0.68rem);
-  letter-spacing: 0.2em;
+  font-size: clamp(0.45rem, 1.3vw, 0.62rem);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--foam);
-  opacity: 0.75;
-  margin-top: 0.35rem;
-  white-space: nowrap;
+  opacity: 0.7;
+  margin-top: 0.25rem;
 }
 
 .colon {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(1.4rem, 5vw, 3rem);
+  font-size: clamp(1.3rem, 5vw, 2.6rem);
   color: var(--sun);
-  opacity: 0.7;
-  padding-bottom: 1.2rem;
-  line-height: 1;
+  opacity: 0.65;
+  align-self: center;
+  padding-bottom: 0.8rem;
   flex-shrink: 0;
 }
 
+/* ── Departure ── */
 .depart {
-  font-size: clamp(0.75rem, 2.2vw, 0.88rem);
+  font-size: clamp(0.7rem, 2vw, 0.85rem);
   color: var(--foam);
-  opacity: 0.7;
-  letter-spacing: 0.12em;
-  margin-bottom: 1.8rem;
-  animation: riseIn 1.2s 0.55s both;
+  opacity: 0.75;
+  letter-spacing: 0.1em;
 }
 .depart span { color: var(--sun); opacity: 1; font-weight: 500; }
 
-.progress-wrap { animation: riseIn 1.2s 0.65s both; }
+/* ── Progress ── */
+.progress-wrap { width: 100%; }
 
 .prog-meta {
   display: flex;
   justify-content: space-between;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
+  font-size: clamp(0.55rem, 1.4vw, 0.66rem);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--foam);
-  opacity: 0.6;
-  margin-bottom: 0.5rem;
+  opacity: 0.55;
+  margin-bottom: 0.4rem;
 }
 
 .prog-track {
-  height: 3px;
+  height: 2px;
   background: rgba(255,255,255,0.12);
   border-radius: 99px;
   overflow: hidden;
@@ -315,14 +319,13 @@ h1 {
   transition: width 1s ease;
 }
 
+/* ── Tagline ── */
 .tagline {
-  margin-top: 1.6rem;
-  font-size: clamp(0.78rem, 2vw, 0.9rem);
+  font-size: clamp(0.72rem, 1.8vw, 0.88rem);
   font-style: italic;
   color: var(--foam);
-  opacity: 0.5;
-  letter-spacing: 0.06em;
-  animation: riseIn 1.2s 0.75s both;
+  opacity: 0.45;
+  letter-spacing: 0.05em;
 }
 ```
 
@@ -334,8 +337,19 @@ h1 {
   <div class="sun-glow"></div>
   <div class="sun-orb"></div>
 
+  <div class="ocean">
+    <div class="wave-layer w3"></div>
+    <div class="wave-layer w2"></div>
+    <div class="wave-layer w1"></div>
+  </div>
+  <div class="horizon-haze"></div>
+  <div class="sandbar"></div>
+  <div class="foam-dots" id="foamDots"></div>
+
+  <!-- Palms behind card (z-index 6, card is 10) -->
+
   <div class="palm-left">
-    <svg width="120" height="260" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100" height="220" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M55 260 Q52 200 48 160 Q44 120 40 90" stroke="#1a3a1f" stroke-width="8" stroke-linecap="round" fill="none"/>
       <path d="M40 90 Q10 60 -10 30" stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
       <path d="M40 90 Q30 50 50 20"  stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
@@ -351,7 +365,7 @@ h1 {
   </div>
 
   <div class="palm-right">
-    <svg width="120" height="260" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="100" height="220" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M55 260 Q52 200 48 160 Q44 120 40 90" stroke="#1a3a1f" stroke-width="8" stroke-linecap="round" fill="none"/>
       <path d="M40 90 Q10 60 -10 30" stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
       <path d="M40 90 Q30 50 50 20"  stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
@@ -365,15 +379,6 @@ h1 {
       <ellipse cx="-8"  cy="98" rx="12" ry="4" fill="#2d6a30" transform="rotate(-10 -8 98)"/>
     </svg>
   </div>
-
-  <div class="ocean">
-    <div class="wave-layer w3"></div>
-    <div class="wave-layer w2"></div>
-    <div class="wave-layer w1"></div>
-  </div>
-  <div class="horizon-haze"></div>
-  <div class="sandbar"></div>
-  <div class="foam-dots" id="foamDots"></div>
 
   <div class="card">
     <p class="eyebrow">✦ Next stop ✦</p>
@@ -408,7 +413,7 @@ h1 {
 <div class="progress-wrap">
   <div class="prog-meta">
     <span>Today</span>
-    <span id="pct-lbl">0% of the wait done</span>
+    <span id="pct-lbl">0.00% of the wait done</span>
     <span>Takeoff ✈️</span>
   </div>
   <div class="prog-track">
@@ -428,23 +433,17 @@ h1 {
       const d = document.createElement('div');
       d.className = 'foam-dot';
       const size = 3 + Math.random() * 7;
-      d.style.cssText = `
-        width:${size}px; height:${size}px;
-        left:${Math.random()*100}%;
-        top:${Math.random()*10}px;
-        animation-delay:${Math.random()*3}s;
-        animation-duration:${2+Math.random()*2}s;
-      `;
+      d.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*10}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s;`;
       foamWrap.appendChild(d);
     }
 
-    // May 16 2026 6:00 AM EDT = 10:00 UTC
-    const target = new Date(Date.UTC(2026, 4, 16, 10, 0, 0));
+    // May 16 2026 6:00 AM EDT (UTC-4) = 10:00 UTC
+    const target  = new Date(Date.UTC(2026, 4, 16, 10, 0, 0));
     const startMs = Date.now();
     const totalMs = target.getTime() - startMs;
 
     function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
-    let prev = { d: -1, h: -1, m: -1, s: -1 };
+    let prev = { d:-1, h:-1, m:-1, s:-1 };
 
     function triggerPop(id) {
       const el = document.getElementById(id);
@@ -454,7 +453,7 @@ h1 {
     }
 
     function tick() {
-      const now = Date.now();
+      const now  = Date.now();
       const diff = target.getTime() - now;
       if (diff <= 0) {
         ['days','hrs','mins','secs'].forEach(id => document.getElementById(id).textContent = '00');
@@ -462,19 +461,18 @@ h1 {
         document.getElementById('fill').style.width = '100%';
         return;
       }
-      const totalSecs = Math.floor(diff / 1000);
-      const d = Math.floor(totalSecs / 86400);
-      const h = Math.floor((totalSecs % 86400) / 3600);
-      const m = Math.floor((totalSecs % 3600) / 60);
-      const s = totalSecs % 60;
+      const ts = Math.floor(diff / 1000);
+      const d  = Math.floor(ts / 86400);
+      const h  = Math.floor((ts % 86400) / 3600);
+      const m  = Math.floor((ts % 3600) / 60);
+      const s  = ts % 60;
 
       if (d !== prev.d) { document.getElementById('days').textContent = d;     triggerPop('b-days'); prev.d = d; }
       if (h !== prev.h) { document.getElementById('hrs').textContent  = pad(h); triggerPop('b-hrs');  prev.h = h; }
       if (m !== prev.m) { document.getElementById('mins').textContent = pad(m); triggerPop('b-mins'); prev.m = m; }
       if (s !== prev.s) { document.getElementById('secs').textContent = pad(s); triggerPop('b-secs'); prev.s = s; }
 
-      const elapsed = now - startMs;
-      const pct = Math.min(100, (elapsed / totalMs) * 100);
+      const pct = Math.min(100, ((now - startMs) / totalMs) * 100);
       document.getElementById('fill').style.width = pct + '%';
       document.getElementById('pct-lbl').textContent = pct.toFixed(2) + '% of the wait done';
     }
