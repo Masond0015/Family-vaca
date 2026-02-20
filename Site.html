@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turks &amp; Caicos Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="sky"></div>
+  <div class="sun-glow"></div>
+  <div class="sun-orb"></div>
+
+  <!-- Palm tree SVGs -->
+
+  <div class="palm-left">
+    <svg width="120" height="260" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M55 260 Q52 200 48 160 Q44 120 40 90" stroke="#1a3a1f" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q10 60 -10 30" stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q30 50 50 20"  stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q60 55 80 40"  stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q70 80 100 85" stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q15 90 -5 100" stroke="#1a4a1f" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <ellipse cx="2"   cy="28"  rx="14" ry="5" fill="#2d6a30" transform="rotate(-30 2 28)"/>
+      <ellipse cx="52"  cy="16"  rx="14" ry="5" fill="#2d6a30" transform="rotate(-80 52 16)"/>
+      <ellipse cx="82"  cy="38"  rx="14" ry="5" fill="#2d6a30" transform="rotate(10 82 38)"/>
+      <ellipse cx="102" cy="84"  rx="14" ry="5" fill="#2d6a30" transform="rotate(5 102 84)"/>
+      <ellipse cx="-8"  cy="98"  rx="12" ry="4" fill="#2d6a30" transform="rotate(-10 -8 98)"/>
+    </svg>
+  </div>
+
+  <div class="palm-right">
+    <svg width="120" height="260" viewBox="0 0 120 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M55 260 Q52 200 48 160 Q44 120 40 90" stroke="#1a3a1f" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q10 60 -10 30" stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q30 50 50 20"  stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q60 55 80 40"  stroke="#1a4a1f" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q70 80 100 85" stroke="#1e5420" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <path d="M40 90 Q15 90 -5 100" stroke="#1a4a1f" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <ellipse cx="2"   cy="28"  rx="14" ry="5" fill="#2d6a30" transform="rotate(-30 2 28)"/>
+      <ellipse cx="52"  cy="16"  rx="14" ry="5" fill="#2d6a30" transform="rotate(-80 52 16)"/>
+      <ellipse cx="82"  cy="38"  rx="14" ry="5" fill="#2d6a30" transform="rotate(10 82 38)"/>
+      <ellipse cx="102" cy="84"  rx="14" ry="5" fill="#2d6a30" transform="rotate(5 102 84)"/>
+      <ellipse cx="-8"  cy="98"  rx="12" ry="4" fill="#2d6a30" transform="rotate(-10 -8 98)"/>
+    </svg>
+  </div>
+
+  <div class="ocean">
+    <div class="wave-layer w3"></div>
+    <div class="wave-layer w2"></div>
+    <div class="wave-layer w1"></div>
+  </div>
+  <div class="horizon-haze"></div>
+
+  <div class="sandbar"></div>
+  <div class="foam-dots" id="foamDots"></div>
+
+  <div class="card">
+    <p class="eyebrow">✦ Next stop ✦</p>
+    <h1>Turks &amp; Caicos</h1>
+    <p class="dest-flag">🇹🇨 &nbsp;Providenciales &nbsp;·&nbsp; Caribbean</p>
+
+```
+<div class="countdown">
+  <div class="block" id="b-days">
+    <span class="block-val" id="days">--</span>
+    <span class="block-lbl">Days</span>
+  </div>
+  <div class="colon">:</div>
+  <div class="block" id="b-hrs">
+    <span class="block-val" id="hrs">--</span>
+    <span class="block-lbl">Hours</span>
+  </div>
+  <div class="colon">:</div>
+  <div class="block" id="b-mins">
+    <span class="block-val" id="mins">--</span>
+    <span class="block-lbl">Mins</span>
+  </div>
+  <div class="colon">:</div>
+  <div class="block" id="b-secs">
+    <span class="block-val" id="secs">--</span>
+    <span class="block-lbl">Secs</span>
+  </div>
+</div>
+
+<p class="depart">✈️ &nbsp;Departure: <span>May 16, 2026 · 6:00 AM EST</span></p>
+
+<div class="progress-wrap">
+  <div class="prog-meta">
+    <span>Today</span>
+    <span id="pct-lbl">0% of the wait done</span>
+    <span>Takeoff ✈️</span>
+  </div>
+  <div class="prog-track">
+    <div class="prog-fill" id="fill" style="width:0%"></div>
+  </div>
+</div>
+
+<p class="tagline">Grace Bay awaits — just a little longer ☀️</p>
+```
+
+  </div>
+
+  <script src="countdown.js"></script>
+
+</body>
+</html>
